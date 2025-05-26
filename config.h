@@ -62,11 +62,12 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[] = { "st", NULL };
 
-static const char *inclight[] = { "brightnessctl", "set", "8%+", NULL };
-static const char *declight[] = { "brightnessctl", "set", "8%-", NULL };
-static const char *mutecmd[] = { "amixer", "-q", "set", "Master", "toggle", NULL };
+static const char *inclight[] = { "sudo", "brightnessctl", "set", "8%+", NULL };
+static const char *declight[] = { "sudo", "brightnessctl", "set", "8%-", NULL };
+static const char *mutecmd[] = { "amixer", "-q", "set", "Master", "toggle",  NULL };
 static const char *volupcmd[] = { "amixer", "-q", "set", "Master", "5%+", "unmute", NULL };
 static const char *voldowncmd[] = { "amixer", "-q", "set", "Master", "5%-", "unmute", NULL };
+static const char *statusbar[] = { "statusbar", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -79,10 +80,15 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
     { 0,                            XF86XK_AudioMute, spawn, {.v = mutecmd } },
+    { 0,                            XF86XK_AudioMute, spawn, {.v = statusbar } },
     { 0,                            XF86XK_AudioLowerVolume, spawn, {.v = voldowncmd } },
+    { 0,                            XF86XK_AudioLowerVolume, spawn, {.v = statusbar } },
     { 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
+    { 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = statusbar } },
     { 0,                            XF86XK_MonBrightnessUp,     spawn,      {.v = inclight } },
+    { 0,                            XF86XK_MonBrightnessUp,     spawn,      {.v = statusbar } },
     { 0,                            XF86XK_MonBrightnessDown,   spawn,      {.v = declight } },
+    { 0,                            XF86XK_MonBrightnessDown,   spawn,      {.v = statusbar } },
 	TAGKEYS(                        XK_F1,                     0)
 	TAGKEYS(                        XK_F2,                     1)
 	TAGKEYS(                        XK_F3,                     2)
